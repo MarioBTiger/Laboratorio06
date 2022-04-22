@@ -19,18 +19,24 @@ include_once 'crud.php';
             <table width="100%" border="1" cellpadding="15">
                 <tr>
                     <td>
-                        <input type="text" name="fn" placeholder="Nombre">
+                        <input type="text" name="fn"
+                            placeholder="Nombre" value="<?php
+                                if(isset($_GET['edit'])) 
+                                echo $getROW['fn']; ?>">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="ln" placeholder="Apellido">
+                        <input type="text" name="ln" 
+                            placeholder="Apellido" value="<?php
+                                if(isset($_GET['edit'])) 
+                                echo $getROW['ln']; ?>">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <?php
-                        if (isset($GET['edit'])){
+                        if (isset($_GET['edit'])){
                             ?>
                             <button type="submit" name="update">Editar</button>
                             <?php
@@ -46,20 +52,19 @@ include_once 'crud.php';
         </form>
         <br><br>
 
-        <table width="100%" border="1" cellpadding="15" align="center" >
+        <table width="100%" border="1" cellpadding="15" align="center">
             <?php
-            $res = $MySQLiconn->query("SELECT * FROM data"
-                );
+            $res = $MySQLiconn->query("SELECT * FROM data");
             while($row=$res->fetch_array()){
             ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo $row['fn']; ?></td>
                 <td><?php echo $row['ln']; ?></td>
-                <td><a href="?del=<?php echo $row['id'];
-                ?>" onclick="return confirm('Confirmar eliminación')">Eliminar</a></td>
                 <td><a href="?edit=<?php echo $row['id'];
                 ?>" onclick="return confirm('Confirmar edición')">Editar</a></td>
+                <td><a href="?del=<?php echo $row['id'];    
+                ?>" onclick="return confirm('Confirmar eliminación')">Eliminar</a></td>
             </tr>
             <?php
             }
